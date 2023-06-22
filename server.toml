@@ -1,0 +1,27 @@
+name = '[BR] LiteGaming - Vida Real (RPG)'
+description = 'Tenha uma segunda vida dentro do GTA. Aqui, você pode ser o que quiser e experimentar diferentes estilos de vida. Trabalhe para ganhar dinheiro, progrida na pirâmide social e se divirta sozinho ou com amigos! Venha conhecer o LiteGaming!'
+website = 'litegaming.com.br'
+language = 'pt_br'
+gamemode = 'LiteGaming RPG v1.0'
+tags = [ 'rpg', 'samp-like', 'ptbr', 'text', 'voice', 'srp', 'economy', 'economia' ]
+
+announce = false
+players = 128
+port = 7788
+host = '0.0.0.0'
+
+modules = [ 'js-module' ]
+resources = [
+    'webviews',
+    'core',
+    'vchat'
+]
+
+debug = true
+
+[js-module]
+global-webcrypto = true
+global-fetch = true
+
+[voice]
+bitrate = 64000

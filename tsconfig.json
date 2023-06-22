@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "paths": {
+            "alt:*": ["./resources/*", "./node-modules"],
+            "@lg-client/*": ["./src/core/client/*"],
+            "@lg-server/*": ["./src/core/server/*"],
+            "@lg-shared/*": ["./src/core/shared/*"],
+            "@nativeui": ["./src/core/client/includes/nativeui/NativeUi"]
+        },
+        "typeRoots": [
+            "./node_modules/@types",
+            "./node_modules/@altv",
+            "./node_modules/@altv-vchat",
+            "./resources/vchat/packages"
+        ],
+        "removeComments": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "noImplicitReturns": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "allowJs": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "module": "esNext",
+        "target": "esNext",
+        "outDir": "./resources",
+        "rootDir": "./src",
+        "allowSyntheticDefaultImports": true,
+        "declaration": false,
+        "preserveConstEnums": true,
+    },
+    "include": ["./src/**/*.ts"],
+    "exclude": ["node_modules", "**/*.spec.ts", "resources", "**/*.json"]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "altv-vchat",
+    "version": "1.0.5",
+    "author": "5exyGuy (Aurėjus Remeika)",
+    "type": "module",
+    "scripts": {
+        "build": "turbo run build --filter=!@altv-chat/solid --filter=!@altv-chat/vue --no-daemon",
+        "dev": "turbo run dev --filter=!@altv-chat/solid --filter=!@altv-chat/vue --no-daemon"
+    },
+    "workspaces": [
+        "packages/*",
+        "views/*"
+    ],
+    "devDependencies": {
+        "turbo": "^1.6.3"
+    }
+}

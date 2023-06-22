@@ -1,0 +1,22 @@
+{
+    "$schema": "https://raw.githubusercontent.com/5exyGuy/altv-vchat/master/schemas/options.schema.json",
+    "enableDefaultMessageFormatter": true,
+    "enableHTMLInjections": false,
+    "focusKey": 84,
+    "hideOnConnect": false,
+    "logPlayerCommands": true,
+    "logPlayerMessages": true,
+    "maxCommandSuggestions": 3,
+    "maxMessageBufferLength": 100,
+    "maxMessageHistory": 100,
+    "maxMessageLength": 1000,
+    "maxMessages": 100,
+    "muteMessage": "You are muted.",
+    "placeholder": "Type a message...",
+    "prefix": "/",
+    "scrollStep": 20,
+    "unfocusKey": 27,
+    "unknownCommandMessage": "Unknown command: {0}",
+    "useChatFormattingInAPI": true,
+    "emojiCDN": "http://resource/emojis"
+}
