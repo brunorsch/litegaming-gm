@@ -5,7 +5,7 @@ export const collections: {
     jogadores?: mongoDb.Collection
 } = {}
 
-export async function connectToDatabasesa() {
+export async function connectToDatabase() {
     dotenv.config();
 
     const client = new mongoDb.MongoClient(process.env.DB_CONNECTION);
@@ -18,6 +18,6 @@ export async function connectToDatabasesa() {
     alt.log(`[Server] Conexão com o DB configurada com sucesso`);
 }
 
-async function configurarCollections(db: mongoDb.Db) {
+function configurarCollections(db: mongoDb.Db) {
     collections.jogadores = db.collection('jogador')
 }

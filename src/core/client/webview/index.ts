@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { WebViewEvents } from '../../shared/webviewEvents';
+import { WebViewEvents } from '@lg-shared/webviewEvents';
 
 const F2_KEY = 113;
 let view: alt.WebView;

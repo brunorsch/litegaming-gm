@@ -17,7 +17,7 @@ export function spawnCarrosItem(): NativeMenuItem {
         new NativeUI.ItemsCollection(Object.entries(carros).map(([nome, _]) => new NativeUI.ListItem(nome)))
     );
 
-    let spawnButton = new NativeUI.InstructionalButton("Enter", NativeUI.Control.Enter);
+    let spawnButton = new NativeUI.InstructionalButton("Spawnar", NativeUI.Control.Enter);
     spawnButton.BindToItem(spawnItem);
 
     return {
