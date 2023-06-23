@@ -8,7 +8,8 @@ export interface NativeMenuItem {
 export function bindItems(menu: NativeUI.Menu, ...itens: NativeMenuItem[]) {
     itens.forEach((item) => {
         menu.AddItem(item.item)
-        menu.ItemSelect.on((selectedItem: NativeUI.UIMenuItem) => {
+
+        menu.menu.ItemSelect.on((selectedItem: NativeUI.UIMenuItem) => {
             if (selectedItem == item.item) {
                 item.callback(selectedItem)
             }

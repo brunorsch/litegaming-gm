@@ -17,13 +17,13 @@ export function spawnCarrosItem(): NativeMenuItem {
         new NativeUI.ItemsCollection(Object.entries(carros).map(([nome, _]) => new NativeUI.ListItem(nome)))
     )
 
-    let spawnButton = new NativeUI.InstructionalButton('Spawnar', NativeUI.Control.Enter)
+    let spawnButton = new NativeUI.InstructionalButton('Spawnar carro', NativeUI.Control.PhoneSelect)
     spawnButton.BindToItem(spawnItem)
 
     return {
         item: spawnItem,
         callback: (item: NativeUI.UIMenuItem) => {
-            if (item instanceof NativeUI.UIMenuListItem) {
+            if (item.Selected && item instanceof NativeUI.UIMenuListItem) {
                 alt.emitServer(EventosServer.STAFF_SPAWNAR_CARRO, [carros[item.SelectedItem.DisplayText]])
             }
         },
