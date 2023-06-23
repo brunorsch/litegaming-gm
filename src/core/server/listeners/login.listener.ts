@@ -1,13 +1,32 @@
-import * as alt from 'alt-server';
-import { registrarSugestoesComandos } from '@lg-server/comandos/comandos'
+import * as alt from 'alt-server'
+import * as comandos from '@lg-server/comandos/comandos'
+import { Jogador, manager } from '@lg-server/jogador/index'
+import { Locais } from '@lg-shared/enum/locais'
 
-alt.on('playerConnect', (player: alt.Player) => {
-    alt.log(`${player.name} [${player.id}] conectou no servidor (IP: ${player.ip})`);
+alt.on('playerConnect', async (player: alt.Player) => {
+    alt.log(`[Info] ${player.name} [${player.id}] conectou no servidor (IP: ${player.ip})`)
 
-    player.model = 'mp_m_freemode_01';
-    player.spawn(-1041.5209, -2744.2153, 21.3436, 3);
-    player.setClothes(11, 86, 1)
-    player.setSyncedMeta('NAME', player.name)
+    let perfil = await manager.carregarPerfil(player.id, player.name)
 
-    registrarSugestoesComandos(player)
-});
+    if (perfil !== null || (perfil = await registrarNovoJogador(player)) !== null) {
+        perfil.atribuirDadosPlayer(player)
+
+        comandos.registrarSugestoesComandos(player)
+    }
+})
+
+async function registrarNovoJogador(player: alt.Player): Promise<Jogador | null> {
+    alt.log(`[Info] Criando nova conta para jogador ${player.name}!`)
+
+    // TODO: Dinamizar
+    const novoPerfil = new Jogador(player.name, Jogador.Sexo.MASCULINO, Locais.SPAWN_PADRAO)
+
+    try {
+        await manager.criarPerfil(player.id, novoPerfil)
+    } catch (ignored) {
+        player.kick('Ocorreu um erro inesperado ao criar seu perfil. Fale conosco no Discord!')
+        return null
+    }
+
+    return novoPerfil
+}

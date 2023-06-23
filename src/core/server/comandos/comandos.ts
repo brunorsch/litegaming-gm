@@ -1,14 +1,14 @@
-import * as chat from 'alt:vchat';
-import * as alt from 'alt-server';
+import * as chat from 'alt:vchat'
+import * as alt from 'alt-server'
 
 const sugestoes = []
 
 export function addSugestao(sugestao: chat.CommandSuggestion) {
-    sugestoes.push(sugestao);
+    sugestoes.push(sugestao)
 }
 
 export function registrarSugestoesComandos(player: alt.Player) {
-    sugestoes.forEach(sugestao => {
+    sugestoes.forEach((sugestao) => {
         chat.addSuggestion(player, sugestao)
     })
 }

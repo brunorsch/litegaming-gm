@@ -1,12 +1,17 @@
-import './util/ipc'; // Used to reconnect, do not remove.
-import * as alt from 'alt-server';
+import * as dotenv from 'dotenv'
+import * as alt from 'alt-server'
 
-import { connectLocalClient } from './util/reconnect';
+import { connectLocalClient } from './util/reconnect'
+import { conectarDatabase } from '@lg-server/service/database.service'
 
-import './comandos/index';
-import './listeners/index';
+import './comandos/index'
+import './listeners/index'
 import './npc/index'
+import './util/ipc' // Used to reconnect, do not remove.
 
-alt.log(`[Server] LiteGaming sRP - Servidor iniciado`);
+dotenv.config()
 
-connectLocalClient();
+conectarDatabase()
+connectLocalClient()
+
+alt.log(`LiteGaming RPG - Servidor iniciado`)

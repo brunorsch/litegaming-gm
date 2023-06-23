@@ -1,3 +1,3 @@
-import * as alt from 'alt-client';
+import * as alt from 'alt-client'
 
-alt.setWatermarkPosition(3);
+alt.setWatermarkPosition(3)

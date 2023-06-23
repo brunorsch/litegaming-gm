@@ -1,30 +1,30 @@
-import { useEffect, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
-import { WebViewEvents } from '../../src/core/shared/webviewEvents';
+import { useEffect, useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import { WebViewEvents } from '../../src/core/shared/enum/webviewEvents.ts'
 
 function App() {
-    const [count, setCount] = useState(0);
-    const [isVisible, setVisibility] = useState(false);
+    const [count, setCount] = useState(0)
+    const [isVisible, setVisibility] = useState(false)
 
     function invokeEvent() {
-        console.log('Test!');
+        console.log('Test!')
 
         if ('alt' in window) {
-            alt.emit('emitToClient');
+            alt.emit('emitToClient')
         }
     }
 
     useEffect(() => {
         if (!alt) {
-            return;
+            return
         }
 
         alt.on(WebViewEvents.toggleVisibility, (shouldBeVisible: boolean) => {
-            setVisibility(shouldBeVisible);
-        });
-    }, []);
+            setVisibility(shouldBeVisible)
+        })
+    }, [])
 
     return (
         <div className={isVisible ? '' : 'hide'}>
@@ -46,7 +46,7 @@ function App() {
             </div>
             <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
         </div>
-    );
+    )
 }
 
-export default App;
+export default App

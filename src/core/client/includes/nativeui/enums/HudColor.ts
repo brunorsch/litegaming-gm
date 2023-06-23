@@ -181,4 +181,4 @@
     HUD_COLOUR_HB_YELLOW = 179,
 }
 
-export default HudColor;
+export default HudColor

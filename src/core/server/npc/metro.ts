@@ -1,5 +1,3 @@
-import * as alt from 'alt-server';
-
 // TODO: Arrumar depoois que descobrir o que ocorre aqui
 
 // let vehicle = new alt.Vehicle(alt.hash('metrotrain'), 193, -603, 16, 0, 0, 0);

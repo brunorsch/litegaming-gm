@@ -347,4 +347,4 @@
     VehicleFlyTransform,
 }
 
-export default Control;
+export default Control

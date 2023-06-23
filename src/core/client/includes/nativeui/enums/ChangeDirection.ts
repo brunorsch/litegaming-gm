@@ -1,6 +1,6 @@
 ﻿enum ChangeDirection {
     Left,
-    Right
+    Right,
 }
 
-export default ChangeDirection;
+export default ChangeDirection

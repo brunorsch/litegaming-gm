@@ -1,16 +1,16 @@
-import * as chat from 'alt:vchat';
-import * as alt from 'alt-server';
-import { PrefixosChat } from '@lg-shared/constantes-chat';
-import * as comandos from '@lg-server/comandos/comandos';
+import * as chat from 'alt:vchat'
+import * as alt from 'alt-server'
+import { PrefixosChat } from '@lg-shared/enum/constantes-chat'
+import * as comandos from '@lg-server/comandos/comandos'
 
 chat.registerCmd('dev-salvarcoord', (player: alt.Player) => {
-    chat.send(player, `${PrefixosChat.STAFF} Coordenadas enviadas pelo console!`);
+    chat.send(player, `${PrefixosChat.STAFF} Coordenadas enviadas pelo console!`)
 
-    if(player.vehicle != null) {
-        alt.log(`Coordenadas jogador ${player.name} (veículo): ${JSON.stringify(player.vehicle.pos)}`);
+    if (player.vehicle != null) {
+        alt.log(`[DevTools] Coordenadas jogador ${player.name} (veículo): ${JSON.stringify(player.vehicle.pos)}`)
     }
 
-    alt.log(`Coordenadas do jogador ${player.name}: ${JSON.stringify(player.pos)}`);
+    alt.log(`[DevTools] Coordenadas do jogador ${player.name}: ${JSON.stringify(player.pos)}`)
 })
 
 comandos.addSugestao({

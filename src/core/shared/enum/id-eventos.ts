@@ -1,4 +1,3 @@
-
 export const EventosClient = {
     MENU_STAFF: 'menu:staff',
 }
