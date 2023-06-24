@@ -1,1 +1,1 @@
-import './staff/staff.menu'
+import './staff/staff-menu'

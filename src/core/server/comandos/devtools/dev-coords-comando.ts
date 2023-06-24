@@ -3,7 +3,7 @@ import * as alt from 'alt-server'
 import { PrefixosChat } from '@lg-shared/enum/constantes-chat'
 import * as comandos from '@lg-server/comandos/comandos'
 
-chat.registerCmd('dev-salvarcoord', (player: alt.Player) => {
+chat.registerCmd('dev-coords', (player: alt.Player) => {
     chat.send(player, `${PrefixosChat.STAFF} Coordenadas enviadas pelo console!`)
 
     if (player.vehicle != null) {

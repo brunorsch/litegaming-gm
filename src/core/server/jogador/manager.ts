@@ -1,6 +1,7 @@
 import { Jogador } from '@lg-server/jogador/jogador'
-import { collections } from '@lg-server/service/database.service'
+import { collections } from '@lg-server/service/database-service'
 import alt from 'alt-server'
+import { EnhancedOmit } from 'mongodb'
 
 const jogadoresOnline = new Map<number, Jogador>()
 
@@ -8,7 +9,7 @@ export async function criarPerfil(id: number, perfil: Jogador) {
     jogadoresOnline.set(id, perfil)
 
     try {
-        await collections.jogadores.insertOne(perfil)
+        await collections.jogadores!.insertOne(perfil)
     } catch (error) {
         alt.logError(`Erro ao criar perfil do jogador ${perfil.nome}: ${error}`)
         jogadoresOnline.delete(id)
@@ -17,13 +18,16 @@ export async function criarPerfil(id: number, perfil: Jogador) {
 }
 
 export async function carregarPerfil(id: number, nomeJogador: string): Promise<Jogador | null> {
-    let perfil = await collections.jogadores.findOne({
+    let perfilBanco: Jogador | null = await collections.jogadores!.findOne({
         nome: nomeJogador,
     })
 
-    if (perfil === null) {
+    if (perfilBanco === null) {
         return null
     }
+
+    // @ts-ignore
+    const perfil = Object.assign(new Jogador(), perfilBanco)
 
     jogadoresOnline.set(id, perfil)
 
@@ -42,7 +46,7 @@ export async function salvarPerfil(player: alt.Player) {
         return
     }
 
-    await collections.jogadores.updateOne({ _id: perfil._id }, perfil, { upsert: true })
+    await collections.jogadores!.updateOne({ _id: perfil._id }, perfil, { upsert: true })
 }
 
 export function get(player: alt.Player): Jogador | undefined {

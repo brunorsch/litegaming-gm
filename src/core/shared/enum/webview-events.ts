@@ -1,3 +1,3 @@
-export const WebViewEvents = {
+export const WebviewEvents = {
     toggleVisibility: 'WebView:Toggle:Visibility',
 }

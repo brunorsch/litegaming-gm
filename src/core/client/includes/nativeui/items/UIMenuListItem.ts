@@ -48,7 +48,7 @@ export default class UIMenuListItem extends UIMenuItem {
         this._itemsCollection = v
     }
 
-    public get SelectedItem() {
+    public get SelectedItem(): ListItem | null {
         return this.Collection.length > 0 ? this.Collection[this.Index] : null
     }
 

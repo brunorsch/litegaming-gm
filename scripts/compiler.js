@@ -1,14 +1,14 @@
 import fs from 'fs-extra'
-import * as glob from 'glob';
+import * as glob from 'glob'
 import swc from '@swc/core'
-import { normalizeFilePath } from './shared.js';
-import path from 'path';
+import { normalizeFilePath } from './shared.js'
+import path from 'path'
 
 const pathDictionary = {
-    "@lg-client": 'client',
-    "@lg-server": 'server',
-    "@lg-shared": 'shared',
-    "@nativeui": 'client/includes/nativeui/NativeUI',
+    '@lg-client': 'client',
+    '@lg-server': 'server',
+    '@lg-shared': 'shared',
+    '@nativeui': 'client/includes/nativeui/NativeUI',
 }
 
 const SWC_CONFIG = {
@@ -25,52 +25,50 @@ const SWC_CONFIG = {
         target: 'es2020',
     },
     sourceMaps: false,
-};
-
-const startTime = Date.now();
-const filesToCompile = glob.sync('./src/core/**/*.ts');
-
-if (fs.existsSync('resources/core')) {
-    fs.rmSync('resources/core', { force: true, recursive: true });
 }
 
+const startTime = Date.now()
+const filesToCompile = glob.sync('./src/core/**/*.ts')
 
-let compileCount = 0;
+if (fs.existsSync('resources/core')) {
+    fs.rmSync('resources/core', { force: true, recursive: true })
+}
+
+let compileCount = 0
 
 for (let i = 0; i < filesToCompile.length; i++) {
-    const filePath = normalizeFilePath(filesToCompile[i]);
+    const filePath = normalizeFilePath(filesToCompile[i])
 
-    const finalPath = filePath.replace('src/', 'resources/').replace('.ts', '.js');
+    const finalPath = filePath.replace('src/', 'resources/').replace('.ts', '.js')
 
-    const compiled = swc.transformFileSync(filePath, SWC_CONFIG);
+    const compiled = swc.transformFileSync(filePath, SWC_CONFIG)
 
-    if(compiled.code.includes(`@lg-`)) {
-        compiled.code = resolvePaths(filePath, compiled.code);
+    if (compiled.code.includes(`@lg-`) || compiled.code.includes(`@nativeui`)) {
+        compiled.code = resolvePaths(filePath, compiled.code)
     }
 
-    fs.outputFileSync(finalPath, compiled.code, { encoding: 'utf-8' });
+    fs.outputFileSync(finalPath, compiled.code, { encoding: 'utf-8' })
 
-    compileCount += 1;
+    compileCount += 1
 }
 
 function resolvePaths(file, rawCode) {
-    const cleanedPath = file.replace(process.cwd().replace(/\\/g, path.sep), '');
-    const pathSplit = cleanedPath.split('/');
-    let depth = 0;
+    const cleanedPath = file.replace(process.cwd().replace(/\\/g, path.sep), '')
+    const pathSplit = cleanedPath.split('/')
+    let depth = 0
 
-    pathSplit.pop();
+    pathSplit.pop()
 
     while (pathSplit[pathSplit.length - 1] !== 'core') {
-        pathSplit.pop();
-        depth += 1;
+        pathSplit.pop()
+        depth += 1
     }
 
     for (let key in pathDictionary) {
-        rawCode = rawCode.replaceAll(key, `../`.repeat(depth) + pathDictionary[key]);
+        rawCode = rawCode.replaceAll(key, `../`.repeat(depth) + pathDictionary[key])
     }
 
-    return rawCode;
+    return rawCode
 }
 
-
-console.log(`${compileCount} Files Built | ${Date.now() - startTime}ms`);;
+console.log(`${compileCount} Files Built | ${Date.now() - startTime}ms`)

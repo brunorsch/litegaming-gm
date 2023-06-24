@@ -7,10 +7,10 @@ export const collections: {
 } = {}
 
 export async function conectarDatabase() {
-    const client = new mongoDb.MongoClient(process.env.DB_CONNECTION)
+    const client = new mongoDb.MongoClient(process.env.DB_CONNECTION!)
     await client.connect()
 
-    const db: mongoDb.Db = client.db(process.env.DB_NAME)
+    const db: mongoDb.Db = client.db(process.env.DB_NAME!)
 
     configurarCollections(db)
 

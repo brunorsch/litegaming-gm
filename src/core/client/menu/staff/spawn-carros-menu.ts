@@ -22,9 +22,10 @@ export function spawnCarrosItem(): NativeMenuItem {
 
     return {
         item: spawnItem,
-        callback: (item: NativeUI.UIMenuItem) => {
-            if (item.Selected && item instanceof NativeUI.UIMenuListItem) {
+        callback: (item, menu) => {
+            if (item.Selected && item instanceof NativeUI.UIMenuListItem && item.SelectedItem != null) {
                 alt.emitServer(EventosServer.STAFF_SPAWNAR_CARRO, [carros[item.SelectedItem.DisplayText]])
+                menu.Close()
             }
         },
     }
