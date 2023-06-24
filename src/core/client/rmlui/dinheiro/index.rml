@@ -1,0 +1,47 @@
+<rml>
+    <head>
+        <title>Saldo: Dinheiro e Banco</title>
+        <style>
+            body {
+                margin: 0;
+            }
+
+            body, #dinheiro-container {
+                font-family: pricedown;
+                font-style: normal;
+                line-height: 0;
+
+                width: 100%;
+
+                font-size: 32px;
+            }
+
+            .dinheiro {
+                color: #3e8f3e;
+                position: absolute;
+
+                top: 24px;
+                right: 1%;
+            }
+
+            .banco {
+                color: #67d367;
+                position: absolute;
+
+                top: 48px;
+                right: 1%;
+            }
+
+            .hide {
+                display: none;
+            }
+
+        </style>
+    </head>
+    <body>
+    <div id="dinheiro-container" class="hide">
+        <span class="dinheiro" id="saldoDinheiro">$0</span>
+        <span class="banco">BANCO <span id="saldoBanco">$0</span></span>
+    </div>
+    </body>
+</rml>

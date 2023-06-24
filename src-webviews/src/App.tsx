@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { WebViewEvents } from '../../src/core/shared/enum/webviewEvents.ts'
+import { WebviewEvents } from '../../src/core/shared/enum/webview-events.ts'
 
 function App() {
     const [count, setCount] = useState(0)
@@ -21,7 +21,7 @@ function App() {
             return
         }
 
-        alt.on(WebViewEvents.toggleVisibility, (shouldBeVisible: boolean) => {
+        alt.on(WebviewEvents.toggleVisibility, (shouldBeVisible: boolean) => {
             setVisibility(shouldBeVisible)
         })
     }, [])

@@ -9,4 +9,15 @@ export function mostrarHelpText(texto: string, tocarSom: boolean, milliseconds: 
     native.endTextCommandDisplayHelp(0, false, tocarSom, milliseconds)
 }
 
-alt.onServer('mostrarHelpText', mostrarHelpText)
+export function debounce(callback: Function, delay: number) {
+    let timer: number | null
+
+    return function () {
+        if (timer) alt.clearTimeout(timer)
+
+        timer = alt.setTimeout(() => {
+            callback()
+            timer = null
+        }, delay)
+    }
+}

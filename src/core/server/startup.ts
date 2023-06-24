@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv'
 import * as alt from 'alt-server'
 
 import { connectLocalClient } from './util/reconnect'
-import { conectarDatabase } from '@lg-server/service/database.service'
+import { conectarDatabase } from '@lg-server/service/database-service'
 
 import './comandos/index'
 import './listeners/index'

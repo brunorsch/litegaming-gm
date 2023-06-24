@@ -20,14 +20,14 @@ interface SelectedStartValueHandler {
 }
 
 export default class UIMenuDynamicListItem extends UIMenuItem {
-    public readonly SelectionChangeHandler: SelectionChangeHandler = null
+    public readonly SelectionChangeHandler: SelectionChangeHandler | null = null
     protected _itemText: ResText
     protected _arrowLeft: Sprite
     protected _arrowRight: Sprite
     private _currentOffset: number = 0
     private _precaptionText: string = ''
-    private _selectedValue: string
-    private readonly _selectedStartValueHandler: SelectedStartValueHandler = null
+    private _selectedValue: string | undefined
+    private readonly _selectedStartValueHandler: SelectedStartValueHandler | null = null
 
     constructor(
         text: string,
@@ -35,7 +35,7 @@ export default class UIMenuDynamicListItem extends UIMenuItem {
             (item: UIMenuDynamicListItem, selectedValue: string, changeDirection: ChangeDirection): string
         },
         description: string = '',
-        selectedStartValueHandler: { (): string } = null,
+        selectedStartValueHandler: { (): string } | null = null,
         data: any = null
     ) {
         super(text, description, data)
@@ -75,11 +75,11 @@ export default class UIMenuDynamicListItem extends UIMenuItem {
         )
     }
 
-    public get SelectedValue(): string {
-        return this._selectedValue
+    public get SelectedValue(): string | null {
+        return this._selectedValue ?? null
     }
 
-    public set SelectedValue(value: string) {
+    public set SelectedValue(value: string | undefined) {
         this._selectedValue = value
         if (value == undefined) return
 
@@ -96,7 +96,7 @@ export default class UIMenuDynamicListItem extends UIMenuItem {
         changeDirection: ChangeDirection
     ): Promise<unknown> {
         return new Promise((resolve, reject) => {
-            let newSelectedValue: string = this.SelectionChangeHandler(item, selectedValue, changeDirection)
+            let newSelectedValue: string = this.SelectionChangeHandler!(item, selectedValue, changeDirection)
             resolve(newSelectedValue)
         })
     }

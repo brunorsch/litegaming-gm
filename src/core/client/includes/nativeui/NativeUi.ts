@@ -34,11 +34,11 @@ let menuPool: NativeUI[] = []
 
 export default class NativeUI {
     public readonly Id: string = UUIDV4()
-    public readonly SelectTextLocalized: string = alt.getGxtText('HUD_INPUT2')
-    public readonly BackTextLocalized: string = alt.getGxtText('HUD_INPUT3')
+    public readonly SelectTextLocalized: string | null = alt.getGxtText('HUD_INPUT2')
+    public readonly BackTextLocalized: string | null = alt.getGxtText('HUD_INPUT3')
     public WidthOffset: number = 0
-    public ParentMenu: NativeUI = null
-    public ParentItem: UIMenuItem = null
+    public ParentMenu: NativeUI | null = null
+    public ParentItem: UIMenuItem | null = null
     public Children: Map<string, NativeUI> // (UUIDV4, NativeUI)
     public MouseControlsEnabled: boolean = false
     public CloseableByUser: boolean = true
@@ -70,7 +70,7 @@ export default class NativeUI {
     public readonly MenuChange = new LiteEvent()
     private _visible: boolean = true
     private _counterPretext: string = ''
-    private _counterOverride: string = undefined
+    private _counterOverride: string | undefined = undefined
     private _spriteLibrary: string
     private _spriteName: string
     private _offset: Point
@@ -81,15 +81,15 @@ export default class NativeUI {
     private _justOpened: boolean = true
     private _justOpenedFromPool: boolean = false
     private _justClosedFromPool: boolean = false
-    private _poolOpening: NativeUI = null
+    private _poolOpening: NativeUI | null = null
     private _safezoneOffset: Point = new Point(0, 0)
     private _activeItem: number = 1000
     private _maxItemsOnScreen: number = 9
     private _minItem: number
     private _maxItem: number = this._maxItemsOnScreen
     private _mouseEdgeEnabled: boolean = true
-    private _bannerSprite: Sprite = null
-    private _bannerRectangle: ResRectangle = null
+    private _bannerSprite: Sprite | null = null
+    private _bannerRectangle: ResRectangle | null = null
     private _recalculateDescriptionNextFrame: number = 1
     private readonly _instructionalButtons: InstructionalButton[] = []
     private readonly _instructionalButtonsScaleform: Scaleform
@@ -334,11 +334,11 @@ export default class NativeUI {
         this.UpdateDescriptionCaption()
     }
 
-    public GetSpriteBanner(): Sprite {
+    public GetSpriteBanner(): Sprite | null {
         return this._bannerSprite
     }
 
-    public GetRectangleBanner(): ResRectangle {
+    public GetRectangleBanner(): ResRectangle | null {
         return this._bannerRectangle
     }
 
@@ -488,7 +488,7 @@ export default class NativeUI {
             this.UpdateDescriptionCaption()
         } else if (this.MenuItems[this.CurrentSelection] instanceof UIMenuDynamicListItem) {
             const it = <UIMenuDynamicListItem>this.MenuItems[this.CurrentSelection]
-            it.SelectionChangeHandlerPromise(it, it.SelectedValue, ChangeDirection.Left).then(
+            it.SelectionChangeHandlerPromise(it, it.SelectedValue!, ChangeDirection.Left).then(
                 (newSelectedValue: string) => {
                     it.SelectedValue = newSelectedValue
                     this.DynamicListChange.emit(it, it.SelectedValue, ChangeDirection.Left)
@@ -533,7 +533,7 @@ export default class NativeUI {
             this.UpdateDescriptionCaption()
         } else if (this.MenuItems[this.CurrentSelection] instanceof UIMenuDynamicListItem) {
             const it = <UIMenuDynamicListItem>this.MenuItems[this.CurrentSelection]
-            it.SelectionChangeHandlerPromise(it, it.SelectedValue, ChangeDirection.Right).then(
+            it.SelectionChangeHandlerPromise(it, it.SelectedValue!, ChangeDirection.Right).then(
                 (newSelectedValue: string) => {
                     it.SelectedValue = newSelectedValue
                     this.DynamicListChange.emit(it, it.SelectedValue, ChangeDirection.Right)
@@ -567,7 +567,7 @@ export default class NativeUI {
             if (this.Children.has(it.Id)) {
                 const subMenu = this.Children.get(it.Id)
                 this.Visible = false
-                subMenu.Visible = true
+                subMenu!.Visible = true
                 this.MenuChange.emit(subMenu, true)
             }
         }
@@ -867,7 +867,7 @@ export default class NativeUI {
     public ReleaseMenuFromItem(releaseFrom: UIMenuItem) {
         if (!this.Children.has(releaseFrom.Id)) return false
 
-        const menu: NativeUI = this.Children.get(releaseFrom.Id)
+        const menu: NativeUI = this.Children.get(releaseFrom.Id)!
         menu.ParentItem = null
         menu.ParentMenu = null
         this.Children.delete(releaseFrom.Id)

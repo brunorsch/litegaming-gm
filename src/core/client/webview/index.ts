@@ -1,6 +1,6 @@
 import * as alt from 'alt-client'
 import * as native from 'natives'
-import { WebViewEvents } from '@lg-shared/enum/webviewEvents'
+import { WebviewEvents } from '@lg-shared/enum/webview-events'
 
 const F2_KEY = 113
 let view: alt.WebView
@@ -9,14 +9,14 @@ let isFocused = false
 export function focusWebView() {
     if (isFocused) {
         view.unfocus()
-        view.emit(WebViewEvents.toggleVisibility, false)
+        view.emit(WebviewEvents.toggleVisibility, false)
         alt.showCursor(false)
         alt.toggleGameControls(true)
         native.triggerScreenblurFadeOut(100)
         isFocused = false
     } else {
         view.focus()
-        view.emit(WebViewEvents.toggleVisibility, true)
+        view.emit(WebviewEvents.toggleVisibility, true)
         alt.showCursor(true)
         alt.toggleGameControls(false)
         native.triggerScreenblurFadeIn(200)
