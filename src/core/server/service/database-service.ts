@@ -3,7 +3,7 @@ import * as alt from 'alt-server'
 import { Jogador } from '@lg-server/jogador'
 
 export const collections: {
-    jogadores?: mongoDb.Collection<Jogador>
+    jogadores?: mongoDb.Collection<Jogador.Schema>
 } = {}
 
 export async function conectarDatabase() {
