@@ -7,7 +7,7 @@ como o Cidade Vida Real (Los Katchorros) do SA:MP.
 
 ### Instalando o projeto
 Após clonado o repositório executar o comando abaixo: 
-
+Executar o mesmo comando para todos as pastas dentro de `resources/`, com a exceção da pasta `core` e `webview`
 ```sh
 npm install
 ```
