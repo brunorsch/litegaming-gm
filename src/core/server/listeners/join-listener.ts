@@ -10,6 +10,7 @@ alt.on('playerConnect', async (player: alt.Player) => {
 
     if (!perfil) return
 
+    perfil.registrarNovoLogin()
     perfil.atribuirDadosPlayer(player)
 
     comandos.registrarSugestoesComandos(player)
@@ -23,6 +24,8 @@ async function registrarNovoJogador(player: alt.Player): Promise<Jogador | null>
 
     try {
         await manager.criarPerfil(player.id, novoPerfil)
+
+        alt.log(`[Info] Perfil do jogador ${player.name} criado com sucesso!`)
     } catch (ignored) {
         player.kick('Ocorreu um erro inesperado ao criar seu perfil. Fale com a gente no Discord!')
         return null
