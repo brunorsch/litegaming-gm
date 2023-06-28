@@ -16,9 +16,9 @@ export async function criarPerfil(id: number, perfil: Jogador) {
     }
 }
 
-export async function carregarPerfil(id: number, nomeJogador: string): Promise<Jogador | null> {
+export async function carregarPerfil(id: number, player: alt.Player): Promise<Jogador | null> {
     let objetoBanco: Jogador.Schema | null = await collections.jogadores!.findOne({
-        nome: nomeJogador,
+        nome: player.name,
     })
 
     if (objetoBanco === null) {
@@ -50,9 +50,13 @@ export async function salvarPerfil(player: alt.Player) {
 
     await collections.jogadores!.replaceOne({ _id: schema._id }, schema)
 
-    alt.log(`Perfil do jogador ${perfil.nome} salvo com sucesso!`)
+    alt.log(`Perfil do jogador ${JSON.stringify(perfil.nome)} salvo com sucesso!`)
 }
 
 export function get(player: alt.Player): Jogador | undefined {
     return jogadoresOnline.get(player.id)
+}
+
+export function getAll() {
+    return Array.from(jogadoresOnline.values())
 }

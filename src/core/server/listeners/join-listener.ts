@@ -6,7 +6,7 @@ import { Locais } from '@lg-shared/enum/locais'
 alt.on('playerConnect', async (player: alt.Player) => {
     alt.log(`[Info] ${player.name} [${player.id}] conectou no servidor (IP: ${player.ip})`)
 
-    let perfil = (await manager.carregarPerfil(player.id, player.name)) ?? (await registrarNovoJogador(player))
+    let perfil = (await manager.carregarPerfil(player.id, player)) ?? (await registrarNovoJogador(player))
 
     if (!perfil) return
 
