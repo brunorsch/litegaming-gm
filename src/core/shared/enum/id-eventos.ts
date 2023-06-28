@@ -4,6 +4,12 @@ export const EventosClient = {
     DT_RMLMODE: 'devtools:rmlmode',
 
     MENU_STAFF: 'menu:staff',
+
+    UP_NIVEL: 'nivel:upNivel',
+    UP_XP: 'nivel:upXp',
+
+    UTILS_HELPTEXT: 'utils:enviarHelpText',
+    UTILS_NOTIFICATION: 'utils:enviarNotification',
 }
 
 // Client -> Server
@@ -13,5 +19,6 @@ export const EventosServer = {
 
     JOGADOR_SET_DINHEIRO: 'jogador:setDinheiro',
 
-    UTILS_HELPTEXT: 'utils:helpText',
+    UP_NIVEL: 'nivel:upNivel',
+    UP_XP: 'nivel:upXp',
 }
