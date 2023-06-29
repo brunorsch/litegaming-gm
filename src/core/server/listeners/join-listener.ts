@@ -11,10 +11,25 @@ alt.on('playerConnect', async (player: alt.Player) => {
     if (!perfil) return
 
     perfil.registrarNovoLogin()
+
     perfil.atribuirDadosPlayer(player)
+
+    sincronizarData(player)
 
     comandos.registrarSugestoesComandos(player)
 })
+
+function sincronizarData(player: alt.Player) {
+    const date = new Date()
+
+    const day = (date.getDate() - 1) as alt.DateTimeDay
+    const month = date.getMonth() as alt.DateTimeMonth
+    const hours = date.getHours() as alt.DateTimeHour
+    const minutes = date.getMinutes() as alt.DateTimeMinute
+    const seconds = date.getSeconds() as alt.DateTimeSecond
+
+    player.setDateTime(day, month, date.getFullYear(), hours, minutes, seconds)
+}
 
 async function registrarNovoJogador(player: alt.Player): Promise<Jogador | null> {
     alt.log(`[Info] Criando nova conta para jogador ${player.name}!`)
