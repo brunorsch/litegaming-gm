@@ -51,7 +51,7 @@ export class Jogador {
 
         player.spawn(this.pos, 3 * 1000)
 
-        alt.emitClient(player, EventosServer.JOGADOR_SET_DINHEIRO, [this.dinheiro, this.saldoBanco])
+        alt.emitClient(player, EventosClient.JOGADOR_SET_DINHEIRO, [this.dinheiro, this.saldoBanco])
     }
 
     sincronizarDadosPlayer(player: alt.Player) {
@@ -72,7 +72,7 @@ export class Jogador {
 
     private verificarUpXp() {
         if (this.nivel.segundosProximoUp <= 0) {
-            this.nivel.segundosProximoUp = Jogador.DEFAULT_SEGUNDOS_POR_UP
+            this.nivel.segundosProximoUp = 30 //Jogador.DEFAULT_SEGUNDOS_POR_UP
 
             this.uparXp()
         }

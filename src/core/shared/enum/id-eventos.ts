@@ -3,6 +3,8 @@ export const EventosClient = {
     // Eventos de devtools
     DT_RMLMODE: 'devtools:rmlmode',
 
+    JOGADOR_SET_DINHEIRO: 'jogador:setDinheiro',
+
     MENU_STAFF: 'menu:staff',
 
     UP_NIVEL: 'nivel:upNivel',
@@ -17,7 +19,7 @@ export const EventosServer = {
     // Eventos da staff
     STAFF_SPAWNAR_CARRO: 'staff:spawnarCarro',
 
-    JOGADOR_SET_DINHEIRO: 'jogador:setDinheiro',
+    JOGADOR_SET_WAYPOINT: 'jogador:setWaypoint',
 
     UP_NIVEL: 'nivel:upNivel',
     UP_XP: 'nivel:upXp',
