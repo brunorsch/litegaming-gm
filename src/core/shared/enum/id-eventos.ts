@@ -4,6 +4,7 @@ export const EventosClient = {
     DT_RMLMODE: 'devtools:rmlmode',
 
     JOGADOR_SET_DINHEIRO: 'jogador:setDinheiro',
+    JOGADOR_PRONTO: 'jogador:pronto', // Após o login completo
 
     MENU_STAFF: 'menu:staff',
 

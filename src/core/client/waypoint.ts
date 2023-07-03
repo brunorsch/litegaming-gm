@@ -1,8 +1,9 @@
 import * as alt from 'alt-client'
 import * as native from 'natives'
-import { EventosServer } from '@lg-shared/enum/id-eventos'
+import { EventosClient, EventosServer } from '@lg-shared/enum/id-eventos'
 import { Posicao } from '@lg-shared/mundo'
-import { debounce } from '@lg-client/utils/functions'
+
+const ID_BLIP_WAYPOINT = 8
 
 let isAtualizandoWaypoint = false
 let dadosUltimoWaypoint: alt.IVector3 | null
@@ -13,42 +14,41 @@ function tick(): void {
     }
 }
 
-const funcaoAtualizacao = debounce(tick, 250)
-
-/**
- * Sends an event to the server when the local player's waypoint is updated.
- * @static
- * @return {void}
- *
- */
 export async function atualizarWaypoint(): Promise<void> {
     if (isAtualizandoWaypoint) {
         return
     }
 
     isAtualizandoWaypoint = true
-    const waypoint = native.getFirstBlipInfoId(8)
+    const waypoint = native.getFirstBlipInfoId(ID_BLIP_WAYPOINT)
 
     const foiRemovido = await verificarWaypointRemovido(waypoint)
 
     if (foiRemovido) {
+        if (dadosUltimoWaypoint !== null) {
+            dadosUltimoWaypoint = null
+            alt.emitServer(EventosServer.JOGADOR_SET_WAYPOINT, null)
+        }
+
         isAtualizandoWaypoint = false
         return
     }
 
-    const coords = native.getBlipInfoIdCoord(waypoint)
+    const coordsWaypoint = native.getBlipInfoIdCoord(waypoint)
 
-    if (dadosUltimoWaypoint && dadosUltimoWaypoint.x === coords.x && dadosUltimoWaypoint.y === coords.y) {
+    if (
+        dadosUltimoWaypoint &&
+        dadosUltimoWaypoint.x === coordsWaypoint.x &&
+        dadosUltimoWaypoint.y === coordsWaypoint.y
+    ) {
+        alt.log('Dados do waypoint não mudaram, não enviando atualizações.')
         isAtualizandoWaypoint = false
         return
     }
 
-    const coordsWaypoint = await procurarCoordenadasPorWaypoint(coords)
-
-    // Did not find the ground position
     dadosUltimoWaypoint = coordsWaypoint
 
-    alt.emitServer(EventosServer.JOGADOR_SET_WAYPOINT, coordsWaypoint)
+    alt.emitServer(EventosServer.JOGADOR_SET_WAYPOINT, [coordsWaypoint])
 
     alt.logDebug('Enviando atualizações do waypoint para o servidor.')
 
@@ -58,23 +58,21 @@ export async function atualizarWaypoint(): Promise<void> {
     isAtualizandoWaypoint = false
 }
 
-async function verificarWaypointRemovido(waypoint: number, coords?: Posicao): Promise<boolean> {
-    if (!native.doesBlipExist(waypoint) || !coords) {
-        if (dadosUltimoWaypoint !== null) {
-            dadosUltimoWaypoint = null
-            alt.emitServer(EventosServer.JOGADOR_SET_WAYPOINT, null)
-        }
+async function verificarWaypointRemovido(waypoint: number): Promise<boolean> {
+    if (!native.doesBlipExist(waypoint)) {
         return true
     } else return false
 }
 
 /**
  * Busca a posição de Z (Altitude da coordenada) com base nas coordenadas de um waypoint
+ * Não está sendo utilizada no momento
  */
 async function procurarCoordenadasPorWaypoint(coords: Posicao): Promise<Posicao | null> {
     let pontoZInicial = 0
 
     for (let i = 0; i < 100; i++) {
+        alt.log('Ponto Z inicial: ' + pontoZInicial)
         native.requestCollisionAtCoord(coords.x, coords.y, coords.z)
         native.setFocusPosAndVel(coords.x, coords.y, pontoZInicial, 0, 0, 0)
 
@@ -93,6 +91,7 @@ async function procurarCoordenadasPorWaypoint(coords: Posicao): Promise<Posicao 
         }
 
         if (pontoZInicial >= 1500) {
+            alt.log('Não foi possível encontrar a coordenada Z do waypoint.')
             return null
         }
 
@@ -105,6 +104,6 @@ async function procurarCoordenadasPorWaypoint(coords: Posicao): Promise<Posicao 
     return null
 }
 
-alt.everyTick(() => {
-    funcaoAtualizacao()
+alt.onServer(EventosClient.JOGADOR_PRONTO, () => {
+    alt.setInterval(tick, 500)
 })

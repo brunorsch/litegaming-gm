@@ -2,6 +2,7 @@ import * as alt from 'alt-server'
 import * as comandos from '@lg-server/comandos/comandos'
 import { Jogador, manager } from '@lg-server/jogador/index'
 import { Locais } from '@lg-shared/enum/locais'
+import { EventosClient } from '@lg-shared/enum/id-eventos'
 
 alt.on('playerConnect', async (player: alt.Player) => {
     alt.log(`[Info] ${player.name} [${player.id}] conectou no servidor (IP: ${player.ip})`)
@@ -15,6 +16,8 @@ alt.on('playerConnect', async (player: alt.Player) => {
     perfil.atribuirDadosPlayer(player)
 
     sincronizarData(player)
+
+    alt.emitClient(player, EventosClient.JOGADOR_PRONTO)
 
     comandos.registrarSugestoesComandos(player)
 })
