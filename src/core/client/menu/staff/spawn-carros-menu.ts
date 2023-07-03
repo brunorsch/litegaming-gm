@@ -10,6 +10,7 @@ export function spawnCarrosItem(): NativeMenuItem {
         Zentorno: 'zentorno',
         Osiris: 'osiris',
         Deluxo: 'deluxo',
+        Neon: 'neon',
     }
 
     let spawnItem = new NativeUI.UIMenuListItem(
