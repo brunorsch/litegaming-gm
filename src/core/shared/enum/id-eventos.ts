@@ -13,6 +13,8 @@ export const EventosClient = {
 
     UTILS_HELPTEXT: 'utils:enviarHelpText',
     UTILS_NOTIFICATION: 'utils:enviarNotification',
+
+    VEICULO_SAIR: 'veiculo:sair',
 }
 
 // Client -> Server
