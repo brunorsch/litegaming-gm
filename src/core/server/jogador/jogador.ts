@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb'
 import { Posicao } from '@lg-shared/mundo'
 import { EventosClient, EventosServer } from '@lg-shared/enum/id-eventos'
 import { Locais } from '@lg-shared/enum/locais'
+import { Habilitacao } from '@lg-server/jogador/index'
 
 export class Jogador {
     private static readonly XP_POR_LEVEL = 6000
@@ -17,6 +18,7 @@ export class Jogador {
         public dinheiro: number = 0,
         public saldoBanco: number = 0,
         public rotacao?: Vector3,
+        public habilitacao?: Habilitacao,
         private _ultimoLogin?: Date,
         private _nivel: Jogador.Nivel = {
             atual: 1,
@@ -116,6 +118,7 @@ export class Jogador {
             nivel: this.nivel,
             dinheiro: this.dinheiro,
             saldoBanco: this.saldoBanco,
+            habilitacao: this.habilitacao?.id ?? undefined,
             ultimoLogin: this.ultimoLogin,
             _id: this._id,
         }
@@ -129,6 +132,7 @@ export class Jogador {
             schema.dinheiro,
             schema.saldoBanco,
             schema.rot,
+            schema.habilitacao ? Habilitacao.HABILITACAO_POR_ID[schema.habilitacao] : undefined,
             schema.ultimoLogin,
             schema.nivel,
             schema._id
@@ -145,7 +149,7 @@ export namespace Jogador {
             [Sexo.FEMININO.id]: Sexo.FEMININO,
         }
 
-        constructor(public id: number, public modelo: string, public exibicao: string) {}
+        private constructor(public id: number, public modelo: string, public exibicao: string) {}
     }
 
     export interface Nivel {
@@ -158,10 +162,11 @@ export namespace Jogador {
         nome: string
         sexo: number
         pos: Posicao
-        rot?: Vector3
         nivel: Nivel
         dinheiro: number
         saldoBanco: number
+        rot?: Vector3
+        habilitacao?: number
         ultimoLogin?: Date
         _id?: ObjectId
     }
