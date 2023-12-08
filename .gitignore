@@ -14,3 +14,4 @@ update.json
 package-lock.json
 ipc.txt
 .env
+.server-crashes-cache/
